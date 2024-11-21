@@ -1,16 +1,22 @@
-FROM debian:9
+FROM debian:12
 
-RUN apt-get update -yq \
-   && apt-get install curl gnupg -yq \
-   && curl -sL https://deb.nodesource.com/setup_10.x | bash \
-   && apt-get install nodejs -yq \
-   && apt-get clean -y
+# Installer les dépendances et Node.js
+RUN apt-get update -yq && \
+    apt-get install -yq curl gnupg ca-certificates && \
+    curl -fsSL https://deb.nodesource.com/setup_20.x — Node.js 20 "Iron"  | bash && \
+    apt-get install -yq nodejs && \
+    apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
+# Ajouter les fichiers de l'application
 ADD . /app/
 WORKDIR /app
+
+# Installer les dépendances de l'application
 RUN npm install
 
+# Exposer le port et configurer les volumes
 EXPOSE 2368
 VOLUME /app/logs
 
-CMD npm run start
+# Commande pour démarrer l'application
+CMD ["npm", "run", "start"]
