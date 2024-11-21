@@ -12,7 +12,7 @@ ADD . /app/
 WORKDIR /app
 
 # Installer les dépendances de l'application
-RUN npm install
+RUN npm install --force
 
 # Exposer le port et configurer les volumes
 EXPOSE 2368
